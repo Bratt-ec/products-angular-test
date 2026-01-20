@@ -24,6 +24,7 @@ button {
   border: none;
   outline: none;
   padding: 12px;
+  min-height: var(--min-height);
   border-radius: 8px;
   background: var(--button-bg);
 }
@@ -53,6 +54,10 @@ input {
   padding: 0.5rem;
   border: 1px solid var(--border-input);
   border-radius: 4px;
+}
+
+input {
+  min-height: var(--min-height);
 }
 
 .error-border {

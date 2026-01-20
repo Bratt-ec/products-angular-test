@@ -18,8 +18,8 @@ import { differenceInYears } from 'date-fns';
 export class AddProductComponent {
 
   private fb = inject(FormBuilder);
-  private _form = inject(FormService);
   private location = inject(Location);
+  private _form = inject(FormService);
   private _product = inject(ProductService);
 
   form: FormGroup;

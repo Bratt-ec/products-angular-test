@@ -15,17 +15,17 @@
   <table>
     <thead>
       <tr>
-        <th *ngFor="let column of columns">{{ column.label | translate }}</th>
+        <th *ngFor="let column of columns()">{{ column.label | translate }}</th>
       </tr>
     </thead>
     <tbody>
       @if (isLoad()) {
         <tr>
-          <td [colSpan]="columns.length">{{ 'labels.loading' | translate }}</td>
+          <td [colSpan]="columns().length">{{ 'labels.loading' | translate }}</td>
         </tr>
       }
       <tr *ngFor="let row of paginatedData">
-        <td *ngFor="let column of columns" [style.width.px]="column.width">
+        <td *ngFor="let column of columns()" [style.width.px]="column.width">
           @if (column.data === 'logo') {
             <img [src]="row[column.data]">
           }
@@ -36,10 +36,10 @@
       </tr>
     </tbody>
 
-    @if (!data.length && !isLoad()) {
+    @if (!data().length && !isLoad()) {
       <tbody>
         <tr>
-          <td [colSpan]="columns.length">{{ 'labels.no_data' | translate }}</td>
+          <td [colSpan]="columns().length">{{ 'labels.no_data' | translate }}</td>
         </tr>
       </tbody>
     }
@@ -47,7 +47,7 @@
   </table>
 </div>
 
-@if (data.length) {
+@if (data().length) {
 
   <article class="pagination-container">
     <div class="total">

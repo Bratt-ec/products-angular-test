@@ -1,20 +1,18 @@
 @if (toast.state().visible) {
-<div class="toast-container" [ngClass]="toast.state().type" (click)="toast.hide()">
-      <div
-        class="toast-container"
-        [ngClass]="getClasses(toast.state().type)"
-        (click)="toast.hide()"
-      >
-        <!-- Icons based on type -->
-        <span class="toast-icon">
-          @switch (toast.state().type) {
-            @case ('success') { ✅ }
-            @case ('error') { ⚠️ }
-            @case ('info') { ℹ️ }
-          }
-        </span>
+<div
+  class="toast-container"
+  [ngClass]="getClasses(toast.state().type)"
+  (click)="toast.hide()"
+>
+  <!-- Icons based on type -->
+  <span class="toast-icon">
+    @switch (toast.state().type) {
+      @case ('success') { ✅ }
+      @case ('error') { ⚠️ }
+      @case ('info') { ℹ️ }
+    }
+  </span>
 
-        <span class="toast-message">{{ toast.state().message }}</span>
-      </div>
+  <span class="toast-message">{{ toast.state().message }}</span>
 </div>
 }
