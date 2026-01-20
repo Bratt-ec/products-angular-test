@@ -1,7 +1,7 @@
 import { ApiRoute } from '@/api/api-route';
 import { BaseApiService } from '@/api/base-api.service';
 import { inject, Injectable } from '@angular/core';
-import { ProductData } from '../dto/product.dto';
+import { ProductCreatedResponse, ProductData } from '@dto/product.dto';
 import { ResponseAPI } from '@/api/api.model';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class ProductService {
   }
 
   async create(product: ProductData) {
-    const response = await this._baseApi.request<ResponseAPI<ProductData>>({
+    const response = await this._baseApi.request<ResponseAPI<ProductCreatedResponse>>({
       catchError: true,
       successMsg: 'messages.product_created',
       request: {

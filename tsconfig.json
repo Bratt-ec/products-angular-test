@@ -10,6 +10,9 @@
       "@/*": [
         "src/app/*"
       ],
+      "@dto/*": [
+        "src/app/infrastructure/dto/*"
+      ],
       "@env/*": [
         "src/environments/*"
       ],

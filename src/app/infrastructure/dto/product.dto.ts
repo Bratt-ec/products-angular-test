@@ -6,3 +6,9 @@ export type ProductData = {
     logo: string;
     name: string;
 }
+
+
+export type ProductCreatedResponse = {
+ data:    ProductData;
+ message: string;
+}
