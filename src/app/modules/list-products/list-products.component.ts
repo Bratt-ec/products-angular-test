@@ -19,9 +19,10 @@ export class ListProductsComponent {
   private _product = inject(ProductService);
 
   products: ProductData[] = [];
+  isLoad: boolean = true
 
   columns: ColumnData[] = [
-    { data: 'logo', label: 'labels.logo', width: 100 },
+    { data: 'logo', label: 'labels.logo', width: 70 },
     { data: 'id', label: 'labels.id' },
     { data: 'name', label: 'labels.name_product' },
     { data: 'description', label: 'labels.description' },
@@ -36,8 +37,10 @@ export class ListProductsComponent {
 
   async getList() {
     const response = await this._product.getAll()
-    if (!response) return
-    this.products = response
+    if (response) {
+      this.products = response
+    }
+    this.isLoad = false
   }
 
   addProduct() {

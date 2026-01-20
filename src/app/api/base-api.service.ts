@@ -6,6 +6,7 @@ import { GlobalService } from '@/core/services/global.service';
 import { lastValueFrom } from 'rxjs';
 import { ToastService } from '@/shared/app-toast/toast.service';
 import { LangService } from '@/core/services/lang.service';
+import { toAwait } from '@/core/utils/app-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class BaseApiService {
       }
 
       if (successMsg) this._toast.show({ message: this.lang._(successMsg), type: 'success' });
+      await toAwait(1000)
       return ResultApi.success<T>(response as T);
     } catch (error: unknown) {
       if (catchError) this._global.catchError(error);

@@ -1,17 +1,17 @@
+<div class="search-bar">
+  <input
+    type="text"
+    role="search"
+    class="search-input"
+    id="searchInput"
+    [placeholder]="'pages.search_product' | translate"
+    autocomplete="off"
+    role="combobox"
+    (input)="onSearch($event)"
+  >
+</div>
+
 <div class="table-container">
-
-  <div class="search-bar">
-    <input
-      type="text"
-      role="search"
-      class="search-input"
-      id="searchInput"
-      [placeholder]="'pages.search_product' | translate"
-      autocomplete="off"
-      role="combobox"
-    >
-  </div>
-
   <table>
     <thead>
       <tr>
@@ -19,19 +19,24 @@
       </tr>
     </thead>
     <tbody>
+      @if (isLoad()) {
+        <tr>
+          <td [colSpan]="columns.length">{{ 'labels.loading' | translate }}</td>
+        </tr>
+      }
       <tr *ngFor="let row of paginatedData">
         <td *ngFor="let column of columns" [style.width.px]="column.width">
           @if (column.data === 'logo') {
             <img [src]="row[column.data]">
           }
           @else {
-            {{ row[column.data] | slice: 0: 60 }}
+            {{ row[column.data] | slice: 0: 60 }}{{ row[column.data].length > 60 ? '...' : '' }}
           }
         </td>
       </tr>
     </tbody>
 
-    @if (!data.length) {
+    @if (!data.length && !isLoad()) {
       <tbody>
         <tr>
           <td [colSpan]="columns.length">{{ 'labels.no_data' | translate }}</td>
@@ -40,12 +45,15 @@
     }
 
   </table>
+</div>
 
-  @if (data.length) {
+@if (data.length) {
 
+  <article class="pagination-container">
     <div class="total">
-      {{ 'labels.total_results' | translate }}: {{ data.length }}
+      {{ 'labels.results' | translate }}: {{ filteredData.length }}
     </div>
+
     <div class="pagination">
       <button (click)="changePage(-1)" [disabled]="currentPage === 1">« {{ 'labels.previous' | translate }}</button>
 
@@ -59,5 +67,5 @@
 
       <button (click)="changePage(1)" [disabled]="currentPage === totalPages">{{ 'labels.next' | translate }} »</button>
     </div>
-  }
-</div>
+  </article>
+}
