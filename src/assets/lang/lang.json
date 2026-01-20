@@ -20,6 +20,8 @@
             "save": "Save",
             "cancel": "Cancel",
             "delete": "Delete",
+            "edit": "Edit",
+            "actions": "Actions",
             "id":"ID",
             "description":"Description",
             "logo":"Logo",

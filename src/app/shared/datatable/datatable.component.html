@@ -16,15 +16,16 @@
     <thead>
       <tr>
         <th *ngFor="let column of columns()">{{ column.label | translate }}</th>
+        @if (actions()) {<th></th>}
       </tr>
     </thead>
     <tbody>
       @if (isLoad()) {
         <tr>
-          <td [colSpan]="columns().length">{{ 'labels.loading' | translate }}</td>
+          <td [colSpan]="columns().length + (actions() ? 1 : 0)">{{ 'labels.loading' | translate }}</td>
         </tr>
       }
-      <tr *ngFor="let row of paginatedData">
+      <tr *ngFor="let row of paginatedData; let i = index">
         <td *ngFor="let column of columns()" [style.width.px]="column.width">
           @if (column.data === 'logo') {
             <img [src]="row[column.data]">
@@ -33,13 +34,35 @@
             {{ row[column.data] | slice: 0: 60 }}{{ row[column.data].length > 60 ? '...' : '' }}
           }
         </td>
+        @if (actions()) {
+          <td class="relative actions">
+            <button class="btn-dropdown" (click)="openDropdown(i)">
+              @if (dropdownOpen === i) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+              } @else{
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M11 19a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M11 5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+              }
+            </button>
+
+            @if (dropdownOpen === i) {
+              <ul class="menu-content">
+                <li>
+                  <button (click)="onActionTable(actionsTb.Edit, row)">{{ 'labels.edit' | translate }}</button>
+                </li>
+                <li>
+                  <button (click)="onActionTable(actionsTb.Delete, row)">{{ 'labels.delete' | translate }}</button>
+                </li>
+              </ul>
+            }
+          </td>
+        }
       </tr>
     </tbody>
 
     @if (!data().length && !isLoad()) {
       <tbody>
         <tr>
-          <td [colSpan]="columns().length">{{ 'labels.no_data' | translate }}</td>
+          <td [colSpan]="columns().length + (actions() ? 1 : 0)">{{ 'labels.no_data' | translate }}</td>
         </tr>
       </tbody>
     }

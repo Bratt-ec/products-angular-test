@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, input, Input, OnDestroy, OnInit, output } from '@angular/core';
+import { AfterViewInit, Component, effect, input, Input, OnDestroy, OnInit, output } from '@angular/core';
 import { TranslatePipe } from '../pipes/translate.pipe';
 import { ActionData, ColumnData, EActionTable } from './datatable.model';
 import { debounceTime, Subject } from 'rxjs';
@@ -10,7 +10,7 @@ import { debounceTime, Subject } from 'rxjs';
   templateUrl: './datatable.component.html',
   styleUrl: './datatable.component.scss'
 })
-export class DatatableComponent implements OnInit, OnDestroy {
+export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   data = input<any[]>([]);
   isLoad = input<boolean>(true)
@@ -18,14 +18,15 @@ export class DatatableComponent implements OnInit, OnDestroy {
 
   pageSize = input<number>(5);
   loading = input<boolean>(false);
-  actions = input<boolean>(false);
+  actions = input<boolean>(true);
 
   onAction = output<ActionData>();
 
   filteredData: any[] = [];
 
   private searchbarTxt = new Subject<string>();
-
+  actionsTb = EActionTable;
+  dropdownOpen: number | null = null;
   currentPage = 1;
 
   constructor() {
@@ -41,11 +42,19 @@ export class DatatableComponent implements OnInit, OnDestroy {
       }
     })
   }
+  ngAfterViewInit(): void {
+    document.addEventListener('clickOutside', () => {
+      this.dropdownOpen = null;
+    });
+  }
 
   ngOnInit() { }
 
   ngOnDestroy(): void {
     this.searchbarTxt.complete();
+    document.removeEventListener('clickOutside', () => {
+      this.dropdownOpen = null;
+    });
   }
 
   get totalPages(): number {
@@ -97,5 +106,9 @@ export class DatatableComponent implements OnInit, OnDestroy {
 
   onActionTable(action: EActionTable, data: any) {
     this.onAction.emit({ action, data });
+  }
+
+  openDropdown(i: number | null) {
+    this.dropdownOpen = this.dropdownOpen === i ? null : i;
   }
 }
