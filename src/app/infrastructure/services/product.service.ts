@@ -1,6 +1,8 @@
+import { ApiRoute } from '@/api/api-route';
 import { BaseApiService } from '@/api/base-api.service';
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { ProductData } from '../dto/product.dto';
+import { ResponseAPI } from '@/api/api.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,5 +11,16 @@ export class ProductService {
 
   private _baseApi = inject(BaseApiService);
 
-  getAll(){}
+  async getAll() {
+    const response = await this._baseApi.request<ResponseAPI<ProductData[]>>({
+      request: {
+        action: 'get',
+        url: ApiRoute.product.list,
+      }
+    })
+
+    if (response.isFailure) return null
+
+    return response.value.data
+  }
 }

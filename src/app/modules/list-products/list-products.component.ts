@@ -1,31 +1,43 @@
 import { AppRoutes } from '@/core/utils/app-routes';
+import { ProductData } from '@/infrastructure/dto/product.dto';
+import { ProductService } from '@/infrastructure/services/product.service';
 import { DatatableComponent } from '@/shared/datatable/datatable.component';
+import { ColumnData } from '@/shared/datatable/datatable.model';
 import { TranslatePipe } from '@/shared/pipes/translate.pipe';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-products',
-  imports: [DatatableComponent,TranslatePipe],
+  imports: [DatatableComponent, TranslatePipe],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.scss'
 })
 export class ListProductsComponent {
-  sampleData = [
-    // { name: 'Alice', age: 30, country: 'USA' },
-    // { name: 'Bob', age: 25, country: 'Canada' },
-    // { name: 'Charlie', age: 35, country: 'UK' }
-  ];
 
-  columns = [
+  private router = inject(Router);
+  private _product = inject(ProductService);
+
+  products: ProductData[] = [];
+
+  columns: ColumnData[] = [
+    { data: 'id', label: 'labels.id' },
     { data: 'name', label: 'labels.name' },
-    { data: 'age', label: 'labels.age' },
-    { data: 'country', label: 'labels.country' }
+    { data: 'logo', label: 'labels.logo' },
+    { data: 'date_release', label: 'labels.release_date' },
   ];
 
   constructor(
-    private router:Router
-  ){}
+  ) {
+    this.getList();
+  }
+
+  async getList() {
+    const response = await this._product.getAll()
+    if (!response) return
+    console.log(response);
+    this.products = response
+  }
 
   addProduct() {
     this.router.navigate([AppRoutes.add_product]);

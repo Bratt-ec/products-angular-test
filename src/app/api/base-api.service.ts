@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ResultApi } from './result-api';
-import { HeadersApi, PerformApi } from './api.model';
+import { HeadersApi, PerformApi, ResponseAPI } from './api.model';
 import { GlobalService } from '@/core/services/global.service';
 import { lastValueFrom } from 'rxjs';
+import { ToastService } from '@/shared/app-toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,11 @@ export class BaseApiService {
 
   protected http = inject(HttpClient);
   protected _global = inject(GlobalService);
-  // protected _ui = inject();
+  protected _toast = inject(ToastService);
 
 
-  async request<T extends ResponseAPI>(params: PerformApi<T>): Promise<ResultApi<T>> {
+  async request<T>(params: PerformApi<T>): Promise<ResultApi<T>> {
     const { loadMsg, successMsg, showLoad, catchError, dataField } = params;
-
-    // let loader: MatDialogRef<AppLoaderComponent> | undefined;
-
-    // if (showLoad) loader = this._global.showLoading(loadMsg);
-
     try {
       const action$ = this.action(params);
 
@@ -32,8 +28,8 @@ export class BaseApiService {
         return ResultApi.failure<T>(`Invalid API Response, dont exist field: ${dataField}`);
       }
 
-      if (successMsg) this._global.showToast(successMsg, 'success');
-      return ResultApi.success<T>(response);
+      if (successMsg) this._toast.show({ message: successMsg, type: 'success' });
+      return ResultApi.success<T>(response as T);
     } catch (error: unknown) {
       if (catchError) this._global.catchError(error);
       let msgError = 'API Error';
@@ -51,13 +47,9 @@ export class BaseApiService {
 
 
   protected action<T>(data: PerformApi<T>) {
-    if (data.request) {
-      const { action, url, params, body, multipart } = data.request;
-      let headers: HeadersApi;
-      // if (multipart) headers = MULTIPART_HEADERS.headers;
-      return this.http.request<T>(action, url, { params, body, headers });
-    }
-
-    return data.request$;
+    const { action, url, params, body, multipart } = data.request;
+    let headers: HeadersApi;
+    // if (multipart) headers = MULTIPART_HEADERS.headers;
+    return this.http.request<T>(action, url, { params, body, headers });
   }
 }
