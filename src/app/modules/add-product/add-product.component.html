@@ -8,17 +8,30 @@
 
             <label [for]="field">{{ toLabel(field) | translate }}</label>
 
-            <input
-                [type]="field.includes('Date') ? 'date' : 'text'"
-                [id]="field"
-                [formControlName]="field"
-                [class.error-border]="isInvalid(field)"
-            />
+            @if (field === 'description') {
+                <textarea
+                    [id]="field"
+                    [formControlName]="field"
+                    [rows]="3"
+                    maxlength="200"
+                    [class.error-border]="isInvalid(field)"
+                ></textarea>
+            }
+            @else {
+                <input
+                    [type]="field.includes('date') ? 'date' : 'text'"
+                    [id]="field"
+                    [maxlength]="getMaxLength(field)"
+                    [formControlName]="field"
+                    [class.error-border]="isInvalid(field)"
+                />
+            }
 
             <msg-validation [formCtrl]="form" [formField]="field" />
         </div>
 
         <button type="submit">{{ 'labels.save' | translate }}</button>
+        <button type="button" class="btn-clean" (click)="back()">{{ 'labels.cancel' | translate }}</button>
     </form>
 
 </section>

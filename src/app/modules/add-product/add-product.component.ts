@@ -24,33 +24,33 @@ export class AddProductComponent {
 
   form: FormGroup;
 
-  fieldsForm = ['id', 'name', 'description', 'logo', 'releaseDate', 'reviewDate']
+  fieldsForm = ['id', 'name', 'description', 'logo', 'date_release', 'date_revision']
 
   constructor() {
     this.form = this.fb.group({
       id: [
         'ID-',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(6)],
+        [Validators.required, Validators.minLength(3), Validators.maxLength(10)],
       ],
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       logo: [null, [Validators.required, AppValidation.urlImage]],
-      releaseDate: [new Date(), [Validators.required]],
-      reviewDate: [new Date(), [Validators.required]]
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+      date_release: [new Date(), [Validators.required]],
+      date_revision: [new Date(), [Validators.required]]
     });
   }
 
   isValidReviewDate() {
-    const { releaseDate, reviewDate } = this.form.value
-    const release = new Date(releaseDate);
-    const review = new Date(reviewDate);
+    const { date_release, date_revision } = this.form.value
+    const release = new Date(date_release);
+    const review = new Date(date_revision);
 
     if (isNaN(release.getTime()) || isNaN(review.getTime())) return false;
 
     console.log(differenceInYears(review, release));
 
     if (differenceInYears(review, release) < 1) {
-      this.form.get('reviewDate')?.setErrors({ invalidReviewDate: true });
+      this.form.get('date_revision')?.setErrors({ invalidReviewDate: true });
       return false;
     }
 
@@ -61,14 +61,23 @@ export class AddProductComponent {
     return Boolean(this._form.validate(field, this.form))
   }
 
+  getMaxLength(field: string): number {
+    const max: any = {
+      id: 10,
+      name: 100,
+      logo: 300,
+    }
+    return max[field]
+  }
+
   toLabel(key: string): string {
     const labels: Record<string, string> = {
       id: 'labels.id',
       name: 'labels.name',
       description: 'labels.description',
       logo: 'labels.logo',
-      releaseDate: 'labels.release_date',
-      reviewDate: 'labels.review_date'
+      date_release: 'labels.release_date',
+      date_revision: 'labels.review_date'
     };
     return labels[key] || key;
   }

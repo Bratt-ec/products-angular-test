@@ -65,7 +65,7 @@ export class FormService {
     // if(inputCtrl.status == 'INVALID') return AppText.err_field_invalid;
 
     if (errors) {
-    console.log(errors);
+    // console.log(errors);
 
       if (errors['existCode']) return 'The entered code is already registered';
       if (errors['repeated']) return 'The code is already added';
