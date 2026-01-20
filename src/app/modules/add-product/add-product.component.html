@@ -9,18 +9,9 @@
             <label [for]="field">{{ toLabel(field) | translate }}</label>
 
             <input
-                *ngIf="field !== 'logo'"
                 [type]="field.includes('Date') ? 'date' : 'text'"
                 [id]="field"
                 [formControlName]="field"
-                [class.error-border]="isInvalid(field)"
-            />
-
-            <input
-                *ngIf="field === 'logo'"
-                type="file"
-                id="logo"
-                formControlName="logo"
                 [class.error-border]="isInvalid(field)"
             />
 

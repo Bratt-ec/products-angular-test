@@ -5,6 +5,7 @@ export type ApiParamsHTTP = HttpParams | Record<string, string | number | boolea
 
 export type PerformApi<T> = {
     loadMsg?: string;
+    /** Must be a key of lang.json */
     successMsg?: string;
     showLoad?: boolean;
     catchError?: boolean;

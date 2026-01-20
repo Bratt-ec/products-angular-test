@@ -24,7 +24,10 @@
             "description":"Description",
             "logo":"Logo",
             "release_date":"Release Date",
-            "review_date":"Review Date"
+            "review_date":"Review Date",
+            "name_product":"Name Product",
+            "results":"Results",
+            "total_results":"Total Results"
         },
         "pages":{
             "list_products": "List of Products",
@@ -35,7 +38,8 @@
             "search_product": "Search product..."
         },
         "messages": {
-            "error_global": "Error processing your request, please try again"
+            "error_global": "Error processing your request, please try again",
+            "product_created": "Product created successfully"
         }
     },
     "es": {}

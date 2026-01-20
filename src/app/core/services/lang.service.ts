@@ -38,7 +38,7 @@ export class LangService {
   _(key: string, replace?: any) {
 
     if (!key.match(/^[\w-]+(?:\.[\w-]+)+$/)) {
-      // return "Invalid key";
+      // "Invalid key";
       return key;
     }
     let segments = key.split('.');

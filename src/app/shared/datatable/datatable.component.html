@@ -20,7 +20,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of paginatedData">
-        <td *ngFor="let column of columns">{{ row[column.data] }}</td>
+        <td *ngFor="let column of columns" [style.width.px]="column.width">
+          @if (column.data === 'logo') {
+            <img [src]="row[column.data]">
+          }
+          @else {
+            {{ row[column.data] | slice: 0: 60 }}
+          }
+        </td>
       </tr>
     </tbody>
 
@@ -36,6 +43,9 @@
 
   @if (data.length) {
 
+    <div class="total">
+      {{ 'labels.total_results' | translate }}: {{ data.length }}
+    </div>
     <div class="pagination">
       <button (click)="changePage(-1)" [disabled]="currentPage === 1">« {{ 'labels.previous' | translate }}</button>
 

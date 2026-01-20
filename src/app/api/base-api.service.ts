@@ -5,6 +5,7 @@ import { HeadersApi, PerformApi, ResponseAPI } from './api.model';
 import { GlobalService } from '@/core/services/global.service';
 import { lastValueFrom } from 'rxjs';
 import { ToastService } from '@/shared/app-toast/toast.service';
+import { LangService } from '@/core/services/lang.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class BaseApiService {
   protected http = inject(HttpClient);
   protected _global = inject(GlobalService);
   protected _toast = inject(ToastService);
+  protected lang = inject(LangService);
 
 
   async request<T>(params: PerformApi<T>): Promise<ResultApi<T>> {
@@ -28,7 +30,7 @@ export class BaseApiService {
         return ResultApi.failure<T>(`Invalid API Response, dont exist field: ${dataField}`);
       }
 
-      if (successMsg) this._toast.show({ message: successMsg, type: 'success' });
+      if (successMsg) this._toast.show({ message: this.lang._(successMsg), type: 'success' });
       return ResultApi.success<T>(response as T);
     } catch (error: unknown) {
       if (catchError) this._global.catchError(error);

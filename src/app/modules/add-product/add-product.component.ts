@@ -1,10 +1,12 @@
 import { FormService } from '@/core/services/form.service';
-import { VersionService } from '@/core/services/version.service';
+import { AppValidation } from '@/core/utils/validations';
+import { ProductService } from '@/infrastructure/services/product.service';
 import { MsgValidationComponent } from '@/shared/msg-validation/msg-validation.component';
 import { TranslatePipe } from '@/shared/pipes/translate.pipe';
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { differenceInYears } from 'date-fns';
 
 @Component({
@@ -15,24 +17,24 @@ import { differenceInYears } from 'date-fns';
 })
 export class AddProductComponent {
 
+  private fb = inject(FormBuilder);
+  private _form = inject(FormService);
+  private location = inject(Location);
+  private _product = inject(ProductService);
+
   form: FormGroup;
 
   fieldsForm = ['id', 'name', 'description', 'logo', 'releaseDate', 'reviewDate']
 
-  constructor(
-    private fb: FormBuilder,
-    private _form: FormService,
-    private _version: VersionService
-  ) {
+  constructor() {
     this.form = this.fb.group({
       id: [
-        '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(10)],
-        [this._version.validateUniqueId()]
+        'ID-',
+        [Validators.required, Validators.minLength(3), Validators.maxLength(6)],
       ],
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
-      logo: [null, Validators.required],
+      logo: [null, [Validators.required, AppValidation.urlImage]],
       releaseDate: [new Date(), [Validators.required]],
       reviewDate: [new Date(), [Validators.required]]
     });
@@ -82,5 +84,13 @@ export class AddProductComponent {
     this.onCreate()
   }
 
-  onCreate() { }
+  async onCreate() {
+    const response = await this._product.create(this.form.value)
+    if (!response) return
+    this.back()
+  }
+
+  back() {
+    this.location.back()
+  }
 }

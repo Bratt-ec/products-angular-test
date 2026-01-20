@@ -21,9 +21,11 @@ export class ListProductsComponent {
   products: ProductData[] = [];
 
   columns: ColumnData[] = [
+    { data: 'logo', label: 'labels.logo', width: 100 },
     { data: 'id', label: 'labels.id' },
-    { data: 'name', label: 'labels.name' },
-    { data: 'logo', label: 'labels.logo' },
+    { data: 'name', label: 'labels.name_product' },
+    { data: 'description', label: 'labels.description' },
+    { data: 'date_revision', label: 'labels.review_date' },
     { data: 'date_release', label: 'labels.release_date' },
   ];
 
@@ -35,7 +37,6 @@ export class ListProductsComponent {
   async getList() {
     const response = await this._product.getAll()
     if (!response) return
-    console.log(response);
     this.products = response
   }
 

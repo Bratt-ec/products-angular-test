@@ -23,4 +23,20 @@ export class ProductService {
 
     return response.value.data
   }
+
+  async create(product: ProductData) {
+    const response = await this._baseApi.request<ResponseAPI<ProductData>>({
+      catchError: true,
+      successMsg: 'messages.product_created',
+      request: {
+        action: 'post',
+        url: ApiRoute.product.add,
+        body: product,
+      }
+    })
+
+    if (response.isFailure) return null
+
+    return response.value.data
+  }
 }
