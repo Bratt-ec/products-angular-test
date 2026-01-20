@@ -1,0 +1,13 @@
+@if (formCtrl) {
+  @if (fieldMsgValidation != '') {
+    <span class="form-error">
+      {{ fieldMsgValidation }}
+    </span>
+  }
+} @else {
+  @if (message != '') {
+    <span class="form-error">
+      {{ message }}
+    </span>
+  }
+}

@@ -1,0 +1,33 @@
+<section>
+    <div class="row">
+        <h2>{{ 'pages.new_product' | translate }}</h2>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onValidate()">
+        <div *ngFor="let field of fieldsForm" class="form-input">
+
+            <label [for]="field">{{ toLabel(field) | translate }}</label>
+
+            <input
+                *ngIf="field !== 'logo'"
+                [type]="field.includes('Date') ? 'date' : 'text'"
+                [id]="field"
+                [formControlName]="field"
+                [class.error-border]="isInvalid(field)"
+            />
+
+            <input
+                *ngIf="field === 'logo'"
+                type="file"
+                id="logo"
+                formControlName="logo"
+                [class.error-border]="isInvalid(field)"
+            />
+
+            <msg-validation [formCtrl]="form" [formField]="field" />
+        </div>
+
+        <button type="submit">{{ 'labels.save' | translate }}</button>
+    </form>
+
+</section>

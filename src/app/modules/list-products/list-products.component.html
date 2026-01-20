@@ -1,0 +1,10 @@
+<section>
+    <div class="row">
+        <h2>{{ 'pages.list_products' | translate }}</h2>
+
+        <button (click)="addProduct()">
+            {{ 'pages.add_product' | translate }}
+        </button>
+    </div>
+    <datatable [data]="sampleData" [columns]="columns" ></datatable>
+</section>

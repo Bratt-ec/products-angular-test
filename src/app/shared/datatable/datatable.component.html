@@ -1,0 +1,53 @@
+<div class="table-container">
+
+  <div class="search-bar">
+    <input
+      type="text"
+      role="search"
+      class="search-input"
+      id="searchInput"
+      [placeholder]="'pages.search_product' | translate"
+      autocomplete="off"
+      role="combobox"
+    >
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">{{ column.label | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of paginatedData">
+        <td *ngFor="let column of columns">{{ row[column.data] }}</td>
+      </tr>
+    </tbody>
+
+    @if (!data.length) {
+      <tbody>
+        <tr>
+          <td [colSpan]="columns.length">{{ 'labels.no_data' | translate }}</td>
+        </tr>
+      </tbody>
+    }
+
+  </table>
+
+  @if (data.length) {
+
+    <div class="pagination">
+      <button (click)="changePage(-1)" [disabled]="currentPage === 1">« {{ 'labels.previous' | translate }}</button>
+
+      <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+        <button
+          [class.active]="currentPage === i + 1"
+          (click)="goToPage(i + 1)">
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+
+      <button (click)="changePage(1)" [disabled]="currentPage === totalPages">{{ 'labels.next' | translate }} »</button>
+    </div>
+  }
+</div>

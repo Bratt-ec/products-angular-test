@@ -1,0 +1,42 @@
+{
+    "en": {
+        "labels": {
+            "next": "Next",
+            "previous": "Previous",
+            "first": "First",
+            "last": "Last",
+            "page": "Page",
+            "of": "of",
+            "go_to": "Go to",
+            "go_to_page": "Go to page",
+            "search": "Search",
+            "no_data": "No data available",
+            "loading": "Loading...",
+            "error": "An error occurred",
+            "name": "Name",
+            "email": "Email",
+            "age": "Age",
+            "country": "Country",
+            "save": "Save",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "id":"ID",
+            "description":"Description",
+            "logo":"Logo",
+            "release_date":"Release Date",
+            "review_date":"Review Date"
+        },
+        "pages":{
+            "list_products": "List of Products",
+            "product_details": "Product Details",
+            "add_product": "Add product",
+            "new_product": "New product",
+            "edit_product": "Edit product",
+            "search_product": "Search product..."
+        },
+        "messages": {
+            "error_global": "Error processing your request, please try again"
+        }
+    },
+    "es": {}
+}
