@@ -67,6 +67,7 @@ export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   changePage(step: number): void {
+    this.dropdownOpen = null;
     const newPage = this.currentPage + step;
     if (newPage >= 1 && newPage <= this.totalPages) {
       this.currentPage = newPage;
@@ -74,17 +75,20 @@ export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goToPage(page: number): void {
+    this.dropdownOpen = null;
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
   }
 
   onSearch(ev: Event) {
+    this.dropdownOpen = null;
     const target = ev.target as HTMLInputElement;
     this.searchbarTxt.next(target.value);
   }
 
   onSearchTable(value: string) {
+    this.dropdownOpen = null;
     const searchTerm = value.toLowerCase().trim();
 
     if (!searchTerm) {
@@ -105,6 +109,7 @@ export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onActionTable(action: EActionTable, data: any) {
+    this.dropdownOpen = null;
     this.onAction.emit({ action, data });
   }
 
