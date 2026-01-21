@@ -53,6 +53,16 @@ form {
   grid-column: 1 / 3;
 }
 
+@media (max-width: 716px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  .fill-grid {
+    grid-column: 1 / 1;
+  }
+}
+
 textarea,
 input {
   padding: 0.5rem;
