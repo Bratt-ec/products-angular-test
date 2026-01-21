@@ -74,7 +74,17 @@
 
   <article class="pagination-container">
     <div class="total">
-      {{ 'labels.results' | translate }}: {{ filteredData.length }}
+      <p>
+        {{ 'labels.results' | translate }}: {{ filteredData.length }}
+      </p>
+
+      <div>
+        <select class="select-page-size" name="pageSize" id="pageSize" (change)="changePageSize($event)">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+      </div>
     </div>
 
     <div class="pagination">

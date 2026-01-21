@@ -28,6 +28,7 @@ export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
   actionsTb = EActionTable;
   dropdownOpen: number | null = null;
   currentPage = 1;
+  sizePage = 5;
 
   constructor() {
     this.searchbarTxt
@@ -42,13 +43,16 @@ export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     })
   }
+
   ngAfterViewInit(): void {
     document.addEventListener('clickOutside', () => {
       this.dropdownOpen = null;
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.sizePage = this.pageSize();
+  }
 
   ngOnDestroy(): void {
     this.searchbarTxt.complete();
@@ -58,12 +62,12 @@ export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.filteredData.length / this.pageSize());
+    return Math.ceil(this.filteredData.length / this.sizePage);
   }
 
   get paginatedData(): any[] {
-    const start = (this.currentPage - 1) * this.pageSize();
-    return this.filteredData.slice(start, start + this.pageSize());
+    const start = (this.currentPage - 1) * this.sizePage;
+    return this.filteredData.slice(start, start + this.sizePage);
   }
 
   changePage(step: number): void {
@@ -115,5 +119,11 @@ export class DatatableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openDropdown(i: number | null) {
     this.dropdownOpen = this.dropdownOpen === i ? null : i;
+  }
+
+  changePageSize($event: Event) {
+    const target = $event.target as HTMLSelectElement;
+    this.sizePage = Number(target.value);
+    this.currentPage = 1;
   }
 }
