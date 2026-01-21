@@ -1,3 +1,15 @@
 <app-loader></app-loader>
+
+<app-confirm-dialog
+    [isVisible]="_confirmDialog.isVisible()"
+    [title]="_confirmDialog.dialogData().title"
+    [message]="_confirmDialog.dialogData().message"
+    [confirmText]="_confirmDialog.dialogData().confirmText ?? '' "
+    [cancelText]="_confirmDialog.dialogData().cancelText ?? ''"
+    [type]="_confirmDialog.dialogData().type ?? 'info' "
+    (confirmed)="_confirmDialog.handleConfirm()"
+    (cancelled)="_confirmDialog.handleCancel()">
+</app-confirm-dialog>
+
 <router-outlet></router-outlet>
 <app-toast></app-toast>

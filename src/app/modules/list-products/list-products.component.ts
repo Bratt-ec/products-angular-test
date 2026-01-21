@@ -18,12 +18,11 @@ export class ListProductsComponent {
   private router = inject(Router);
   private _product = inject(ProductService);
 
-  products: ProductData[] = [];
   isLoad: boolean = true
 
   columns: ColumnData[] = [
     { data: 'logo', label: 'labels.logo', width: 70 },
-    { data: 'id', label: 'labels.id' },
+    { data: 'id', label: 'labels.id',width: 116  },
     { data: 'name', label: 'labels.name_product' },
     { data: 'description', label: 'labels.description' },
     { data: 'date_revision', label: 'labels.review_date' },
@@ -35,11 +34,13 @@ export class ListProductsComponent {
     this.getList();
   }
 
+  get products() {
+    return this._product.products
+  }
+
   async getList() {
-    const response = await this._product.getAll()
-    if (response) {
-      this.products = response
-    }
+    this.isLoad = true
+    await this._product.getAll()
     this.isLoad = false
   }
 
@@ -52,6 +53,11 @@ export class ListProductsComponent {
     if (ev.action == EActionTable.Edit) {
       this._product.productEdit.set(ev.data)
       this.router.navigate([AppRoutes.go_to_edit_product(ev.data.id)])
+      return
+    }
+
+    if (ev.action == EActionTable.Delete) {
+      this._product.delete(ev.data)
       return
     }
   }

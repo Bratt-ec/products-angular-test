@@ -67,6 +67,7 @@ export class FormService {
       if (errors['idRepeated']) return this.lang._('validations.id_repeated');
       if (errors['invalidReviewDate']) return this.lang._('validations.invalid_review_date');
       if (errors['urlImage']) return this.lang._('validations.url_image');
+      if (errors['todayMinDate']) return this.lang._('validations.today_min_date');
 
       if (errors['minlength']) {
         const min = errors['minlength']['requiredLength'];

@@ -28,7 +28,7 @@
       <tr *ngFor="let row of paginatedData; let i = index">
         <td *ngFor="let column of columns()" [style.width.px]="column.width">
           @if (column.data === 'logo') {
-            <img [src]="row[column.data]">
+            <img [src]="row[column.data]" loading="lazy">
           }
           @else {
             {{ row[column.data] | slice: 0: 60 }}{{ row[column.data].length > 60 ? '...' : '' }}
@@ -47,10 +47,10 @@
             @if (dropdownOpen === i) {
               <ul class="menu-content">
                 <li>
-                  <button (click)="onActionTable(actionsTb.Edit, row)">{{ 'labels.edit' | translate }}</button>
+                  <button (click)="onActionTable(actionsTb.Edit, row)" class="txt-info">{{ 'labels.edit' | translate }}</button>
                 </li>
                 <li>
-                  <button (click)="onActionTable(actionsTb.Delete, row)">{{ 'labels.delete' | translate }}</button>
+                  <button (click)="onActionTable(actionsTb.Delete, row)" class="txt-danger">{{ 'labels.delete' | translate }}</button>
                 </li>
               </ul>
             }

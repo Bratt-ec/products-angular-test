@@ -7,7 +7,7 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { differenceInYears } from 'date-fns';
+import { differenceInYears, isSameDay  } from 'date-fns';
 
 @Component({
   selector: 'app-add-product',
@@ -83,6 +83,16 @@ export class AddProductComponent implements OnInit {
     if (differenceInYears(review, release) < 1) {
       this.form.get('date_revision')?.setErrors({ invalidReviewDate: true });
       return false;
+    }
+
+    if(!this.productId) {
+      //VERIFY date_release must be today or greater
+      const today = new Date();
+
+      if (!isSameDay(release, today)) {
+        this.form.get('date_release')?.setErrors({ todayMinDate: true });
+        return false;
+      }
     }
 
     return true

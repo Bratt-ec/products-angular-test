@@ -39,23 +39,37 @@
             "add_product": "Add product",
             "new_product": "New product",
             "edit_product": "Edit product",
-            "search_product": "Search product..."
+            "search_product": "Search product...",
+            "delete_product": "Delete product",
+            "confirm_delete": "Confirm delete",
+            "msg_confirm_delete": "Are you sure you want to delete this item: :name?",
+            "msg_confirm_update": "Are you sure you want to update this item: :name?"
         },
         "messages": {
             "error_global": "Error processing your request, please try again",
             "product_created": "Product created successfully",
-            "product_updated": "Product updated successfully"
+            "product_updated": "Product updated successfully",
+            "product_deleted": "Product deleted successfully"
         },
         "validations": {
             "id_repeated": "The ID is already added",
             "invalid_review_date": "The date must be one year after the date of release",
             "required": "Field is required",
-            "min_value": "The minimum value is {{min}}",
-            "max_value": "The maximum value is {{max}}",
-            "min_length": "The field must be at least {{min}} characters long.",
-            "max_length": "The field must have a maximum of {{max}} characters",
+            "min_value": "The minimum value is :min",
+            "max_value": "The maximum value is :max",
+            "min_length": "The field must be at least :min characters long.",
+            "max_length": "The field must have a maximum of :max characters",
             "email": "Enter a valid email address",
-            "url_image": "Enter a valid image URL"
+            "url_image": "Enter a valid image URL",
+            "today_min_date": "The date must be today or in the future"
+        },
+        "dialogs": {
+            "confirm_action": "Confirm action",
+            "are_you_sure": "Are you sure you want to proceed?",
+            "confirm": "Confirm",
+            "cancel": "Cancel",
+            "save_changes": "Save Changes",
+            "msg_save_changes": "Do you want to save the changes?"
         }
     },
     "es": {}

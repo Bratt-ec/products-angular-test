@@ -3,6 +3,8 @@ import { BaseApiService } from '@/api/base-api.service';
 import { inject, Injectable, signal } from '@angular/core';
 import { PayloadUpdateProduct, ProductCreatedResponse, ProductData } from '@dto/product.dto';
 import { ResponseAPI } from '@/api/api.model';
+import { ConfirmDialogService } from '@/shared/confirm-dialog/confirm-dialog.service';
+import { LangService } from '@/core/services/lang.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ import { ResponseAPI } from '@/api/api.model';
 export class ProductService {
 
   private _baseApi = inject(BaseApiService);
+  private _confirmDialog = inject(ConfirmDialogService);
+  private lang = inject(LangService);
 
   productEdit = signal<ProductData | null>(null)
 
@@ -49,7 +53,7 @@ export class ProductService {
   }
 
   async create(product: ProductData) {
-    const response = await this._baseApi.request<ResponseAPI<ProductCreatedResponse>>({
+    const response = await this._baseApi.request<ProductCreatedResponse>({
       catchError: true,
       showLoad: true,
       successMsg: 'messages.product_created',
@@ -62,13 +66,17 @@ export class ProductService {
 
     if (response.isFailure) return null
 
+    this._products.update(products => [...products, response.value.data])
+
     return response.value.data
   }
 
   async update(payload: PayloadUpdateProduct) {
-    console.log(payload);
 
-    const response = await this._baseApi.request<ResponseAPI<ProductCreatedResponse>>({
+    const confirmed = await this._confirmDialog.confirmSave(this.lang._('pages.msg_confirm_update', { name: payload.name }))
+    if (!confirmed) return null
+
+    const response = await this._baseApi.request<ProductCreatedResponse>({
       catchError: true,
       showLoad: true,
       successMsg: 'messages.product_updated',
@@ -80,6 +88,8 @@ export class ProductService {
     })
 
     if (response.isFailure) return null
+
+    this._products.update(products => products.map(p => p.id === payload.id ? response.value.data : p))
 
     return response.value.data
   }
@@ -93,5 +103,25 @@ export class ProductService {
       }
     })
     return response.value
+  }
+
+  async delete(product: ProductData) {
+    const confirmed = await this._confirmDialog.confirmDelete(product.name)
+    if (!confirmed) return false
+    const response = await this._baseApi.request<any>({
+      catchError: true,
+      showLoad: true,
+      successMsg: 'messages.product_deleted',
+      request: {
+        action: 'delete',
+        url: ApiRoute.product.get(product.id),
+      }
+    })
+
+    if (response.isFailure) return false
+
+    this._products.update(products => products.filter(p => p.id !== product.id))
+
+    return true
   }
 }
