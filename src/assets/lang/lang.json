@@ -18,6 +18,7 @@
             "age": "Age",
             "country": "Country",
             "save": "Save",
+            "update": "Update",
             "cancel": "Cancel",
             "delete": "Delete",
             "edit": "Edit",
@@ -42,7 +43,8 @@
         },
         "messages": {
             "error_global": "Error processing your request, please try again",
-            "product_created": "Product created successfully"
+            "product_created": "Product created successfully",
+            "product_updated": "Product updated successfully"
         },
         "validations": {
             "id_repeated": "The ID is already added",

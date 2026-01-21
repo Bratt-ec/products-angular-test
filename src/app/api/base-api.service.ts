@@ -29,14 +29,13 @@ export class BaseApiService {
       if (!action$) return ResultApi.failure<T>('NEED HTTP REQUEST');
 
       const response = await lastValueFrom(action$);
-      console.log("base-api", response);
 
       if (this._global.isInvalidResponse(response)) {
         return ResultApi.failure<T>(`Invalid API Response, dont exist field: ${dataField}`);
       }
 
       if (successMsg) this._toast.show({ message: this.lang._(successMsg), type: 'success' });
-      await toAwait(1000)
+      await toAwait(500)
       return ResultApi.success<T>(response as T);
     } catch (error: unknown) {
       if (catchError) this._global.catchError(error);

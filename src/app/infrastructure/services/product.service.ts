@@ -1,7 +1,7 @@
 import { ApiRoute } from '@/api/api-route';
 import { BaseApiService } from '@/api/base-api.service';
 import { inject, Injectable, signal } from '@angular/core';
-import { ProductCreatedResponse, ProductData } from '@dto/product.dto';
+import { PayloadUpdateProduct, ProductCreatedResponse, ProductData } from '@dto/product.dto';
 import { ResponseAPI } from '@/api/api.model';
 
 @Injectable({
@@ -10,6 +10,8 @@ import { ResponseAPI } from '@/api/api.model';
 export class ProductService {
 
   private _baseApi = inject(BaseApiService);
+
+  productEdit = signal<ProductData | null>(null)
 
   private _products = signal<ProductData[]>([])
 
@@ -34,6 +36,18 @@ export class ProductService {
     return response.value.data
   }
 
+  async getOne(id: string) {
+    const response = await this._baseApi.request<ProductData>({
+      showLoad: true,
+      request: {
+        action: 'get',
+        url: ApiRoute.product.get(id),
+      }
+    })
+    if (response.isFailure) return null
+    return response.value
+  }
+
   async create(product: ProductData) {
     const response = await this._baseApi.request<ResponseAPI<ProductCreatedResponse>>({
       catchError: true,
@@ -43,6 +57,25 @@ export class ProductService {
         action: 'post',
         url: ApiRoute.product.add,
         body: product,
+      }
+    })
+
+    if (response.isFailure) return null
+
+    return response.value.data
+  }
+
+  async update(payload: PayloadUpdateProduct) {
+    console.log(payload);
+
+    const response = await this._baseApi.request<ResponseAPI<ProductCreatedResponse>>({
+      catchError: true,
+      showLoad: true,
+      successMsg: 'messages.product_updated',
+      request: {
+        action: 'put',
+        url: ApiRoute.product.get(payload.id),
+        body: payload,
       }
     })
 

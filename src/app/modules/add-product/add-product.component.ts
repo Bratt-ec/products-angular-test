@@ -4,9 +4,9 @@ import { ProductService } from '@/infrastructure/services/product.service';
 import { MsgValidationComponent } from '@/shared/msg-validation/msg-validation.component';
 import { TranslatePipe } from '@/shared/pipes/translate.pipe';
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { differenceInYears } from 'date-fns';
 
 @Component({
@@ -15,9 +15,10 @@ import { differenceInYears } from 'date-fns';
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss'
 })
-export class AddProductComponent {
+export class AddProductComponent implements OnInit {
 
   private fb = inject(FormBuilder);
+  private activeRoute = inject(ActivatedRoute);
   private location = inject(Location);
   private _form = inject(FormService);
   private _product = inject(ProductService);
@@ -38,6 +39,34 @@ export class AddProductComponent {
       date_release: [new Date(), [Validators.required]],
       date_revision: [new Date(), [Validators.required]]
     });
+
+    if (this._product.productEdit()) {
+      this.form.patchValue(this._product.productEdit()!)
+      this.form.get('id')?.disable()
+    }
+  }
+
+  get productId() {
+    return this.activeRoute.snapshot.paramMap.get('id')
+  }
+
+  ngOnInit(): void {
+    if (this.productId && !this._product.productEdit()) {
+      this.setEditable()
+    }
+  }
+
+  async setEditable() {
+    const response = await this._product.getOne(this.productId!)
+
+    if (!response) {
+      this.back()
+      return
+    }
+
+    this.form.patchValue(response)
+    this.form.get('id')?.disable()
+
   }
 
   reset() {
@@ -92,6 +121,11 @@ export class AddProductComponent {
     if (!isValidReviewDate) return
     if (this.form.invalid) return
 
+    if (this.productId) {
+      this.onUpdate()
+      return
+    }
+
     this.onCreate()
   }
 
@@ -105,6 +139,15 @@ export class AddProductComponent {
     }
 
     const response = await this._product.create(this.form.value)
+    if (!response) return
+    this.back()
+  }
+
+  async onUpdate() {
+    const response = await this._product.update({
+      id: this.productId!,
+      ...this.form.value
+    })
     if (!response) return
     this.back()
   }

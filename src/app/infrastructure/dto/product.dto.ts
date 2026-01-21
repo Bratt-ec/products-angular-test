@@ -7,6 +7,10 @@ export type ProductData = {
     name: string;
 }
 
+export type PayloadUpdateProduct = ProductData & {
+    id: string;
+}
+
 
 export type ProductCreatedResponse = {
  data:    ProductData;

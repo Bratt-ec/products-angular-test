@@ -30,7 +30,7 @@
             <msg-validation [formCtrl]="form" [formField]="field" />
         </div>
 
-        <button type="submit">{{ 'labels.save' | translate }}</button>
+        <button type="submit">{{ (productId ? 'labels.update' : 'labels.save') | translate }}</button>
         <div class="row">
             <button type="button" class="btn-clean flex-1" (click)="back()">{{ 'labels.cancel' | translate }}</button>
             <button type="button" class="btn-clean flex-1" (click)="reset()">{{ 'labels.reset' | translate }}</button>

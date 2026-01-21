@@ -2,7 +2,7 @@ import { AppRoutes } from '@/core/utils/app-routes';
 import { ProductData } from '@/infrastructure/dto/product.dto';
 import { ProductService } from '@/infrastructure/services/product.service';
 import { DatatableComponent } from '@/shared/datatable/datatable.component';
-import { ColumnData } from '@/shared/datatable/datatable.model';
+import { ActionData, ColumnData, EActionTable } from '@/shared/datatable/datatable.model';
 import { TranslatePipe } from '@/shared/pipes/translate.pipe';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
@@ -45,5 +45,14 @@ export class ListProductsComponent {
 
   addProduct() {
     this.router.navigate([AppRoutes.add_product]);
+  }
+
+  onAction(ev: ActionData) {
+    console.log(ev)
+    if (ev.action == EActionTable.Edit) {
+      this._product.productEdit.set(ev.data)
+      this.router.navigate([AppRoutes.go_to_edit_product(ev.data.id)])
+      return
+    }
   }
 }
