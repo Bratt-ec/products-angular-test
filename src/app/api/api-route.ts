@@ -5,6 +5,8 @@ export class ApiRoute {
     static readonly product = {
         add: `${BASE_URL}products`,
         get: (id: string) => `${BASE_URL}products/${id}`,
-        list: `${BASE_URL}products`
+        list: `${BASE_URL}products`,
+        verifyId: (id: string) => `${BASE_URL}products/verification/${id}`
     }
+
 }

@@ -27,6 +27,8 @@ export class BaseApiService {
       if (!action$) return ResultApi.failure<T>('NEED HTTP REQUEST');
 
       const response = await lastValueFrom(action$);
+      console.log("base-api",response);
+
       if (this._global.isInvalidResponse(response)) {
         return ResultApi.failure<T>(`Invalid API Response, dont exist field: ${dataField}`);
       }

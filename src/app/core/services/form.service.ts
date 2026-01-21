@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FieldInputForm } from '../models/form.model';
+import { LangService } from './lang.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormService {
 
-  constructor(
-    private form: FormBuilder
-  ) { }
+  private form: FormBuilder = inject(FormBuilder)
+  private lang = inject(LangService)
   /**
    * Builds a form group based on the given base form.
    *
@@ -62,54 +62,33 @@ export class FormService {
 
     if (!inputCtrl.touched) return '';
 
-    // if(inputCtrl.status == 'INVALID') return AppText.err_field_invalid;
-
     if (errors) {
-    // console.log(errors);
 
-      if (errors['existCode']) return 'The entered code is already registered';
-      if (errors['repeated']) return 'The code is already added';
-      if (errors['invalidReviewDate']) return 'The date must be one year after the date of release';
+      if (errors['idRepeated']) return this.lang._('validations.id_repeated');
+      if (errors['invalidReviewDate']) return this.lang._('validations.invalid_review_date');
+      if (errors['urlImage']) return this.lang._('validations.url_image');
 
       if (errors['minlength']) {
         const min = errors['minlength']['requiredLength'];
-        return `The field must be at least ${min} characters long.`;
+        return this.lang._('validations.min_length', { min });
       }
       if (errors['min']) {
         const min = errors['min']['min'];
-        return `The minimum value is ${min}`;
+        return this.lang._('validations.min_value', { min });
       }
       if (errors['max']) {
-        const min = errors['max']['max'];
-        return `The maximum value is ${min}`;
+        const max = errors['max']['max'];
+        return this.lang._('validations.max_value', { max });
       }
-      if (errors['email']) return 'Enter a valid email address';
+      if (errors['email']) return this.lang._('validations.email');
       if (errors['maxlength']) {
         const reqLength = errors['maxlength']['requiredLength'];
-        return `The field must have a maximum of ${reqLength} characters`;
+        return this.lang._('validations.max_length', { reqLength });
       }
-      if (errors['noMatchPassword']) return 'Passwords do not match';
-      if (errors['required']) return 'Field is required';
-      if (errors['pattern'] && fieldInput.includes('password')) return 'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character: .@$!%*?&'
+      if (errors['required']) return this.lang._('validations.required');
     }
 
-    if (inputCtrl.touched && inputCtrl.status == "INVALID") return 'Enter a valid value';
-
-    const passwordFields = ['password', 'new_password', 'confirm_password'];
-    if (passwordFields.includes(fieldInput)) {
-
-      const newPassword = formCtrl.get('new_password') || formCtrl.get('password')!;
-      const confirmPassword = formCtrl.get('confirm_password')!;
-
-      if (confirmPassword && newPassword) {
-        if (newPassword?.value !== confirmPassword?.value) {
-          confirmPassword.setErrors({ noMatchPassword: true });
-          return 'Passwords do not match';
-        } else {
-          confirmPassword.setErrors(null);
-        }
-      }
-    }
+    if (inputCtrl.touched && inputCtrl.status == "INVALID") return this.lang._('validations.required');
 
     return '';
   }

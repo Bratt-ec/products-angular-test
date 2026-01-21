@@ -29,7 +29,7 @@ export class AddProductComponent {
   constructor() {
     this.form = this.fb.group({
       id: [
-        'ID-',
+        'id-00',
         [Validators.required, Validators.minLength(3), Validators.maxLength(10)],
       ],
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
@@ -40,14 +40,16 @@ export class AddProductComponent {
     });
   }
 
+  reset() {
+    this.form.reset()
+  }
+
   isValidReviewDate() {
     const { date_release, date_revision } = this.form.value
     const release = new Date(date_release);
     const review = new Date(date_revision);
 
     if (isNaN(release.getTime()) || isNaN(review.getTime())) return false;
-
-    console.log(differenceInYears(review, release));
 
     if (differenceInYears(review, release) < 1) {
       this.form.get('date_revision')?.setErrors({ invalidReviewDate: true });
@@ -94,6 +96,14 @@ export class AddProductComponent {
   }
 
   async onCreate() {
+    const { id } = this.form.controls
+    const resp = await this._product.existId(id.value)
+
+    if (resp) {
+      this.form.get('id')?.setErrors({ idRepeated: true })
+      return
+    }
+
     const response = await this._product.create(this.form.value)
     if (!response) return
     this.back()
@@ -102,4 +112,5 @@ export class AddProductComponent {
   back() {
     this.location.back()
   }
+
 }

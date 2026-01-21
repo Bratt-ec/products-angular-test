@@ -31,7 +31,10 @@
         </div>
 
         <button type="submit">{{ 'labels.save' | translate }}</button>
-        <button type="button" class="btn-clean" (click)="back()">{{ 'labels.cancel' | translate }}</button>
+        <div class="row">
+            <button type="button" class="btn-clean flex-1" (click)="back()">{{ 'labels.cancel' | translate }}</button>
+            <button type="button" class="btn-clean flex-1" (click)="reset()">{{ 'labels.reset' | translate }}</button>
+        </div>
     </form>
 
 </section>

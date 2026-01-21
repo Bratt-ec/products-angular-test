@@ -22,16 +22,17 @@
             "delete": "Delete",
             "edit": "Edit",
             "actions": "Actions",
-            "id":"ID",
-            "description":"Description",
-            "logo":"Logo",
-            "release_date":"Release Date",
-            "review_date":"Review Date",
-            "name_product":"Name Product",
-            "results":"Results",
-            "total_results":"Total Results"
+            "id": "ID",
+            "description": "Description",
+            "logo": "Logo",
+            "release_date": "Release Date",
+            "review_date": "Review Date",
+            "name_product": "Name Product",
+            "results": "Results",
+            "total_results": "Total Results",
+            "reset": "Reset"
         },
-        "pages":{
+        "pages": {
             "list_products": "List of Products",
             "product_details": "Product Details",
             "add_product": "Add product",
@@ -42,6 +43,17 @@
         "messages": {
             "error_global": "Error processing your request, please try again",
             "product_created": "Product created successfully"
+        },
+        "validations": {
+            "id_repeated": "The ID is already added",
+            "invalid_review_date": "The date must be one year after the date of release",
+            "required": "Field is required",
+            "min_value": "The minimum value is {{min}}",
+            "max_value": "The maximum value is {{max}}",
+            "min_length": "The field must be at least {{min}} characters long.",
+            "max_length": "The field must have a maximum of {{max}} characters",
+            "email": "Enter a valid email address",
+            "url_image": "Enter a valid image URL"
         }
     },
     "es": {}

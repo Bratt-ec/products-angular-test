@@ -73,3 +73,18 @@ input {
 .relative {
   position: relative;
 }
+
+.flex {
+  display: flex;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
