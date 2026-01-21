@@ -7,7 +7,7 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { differenceInYears, isSameDay  } from 'date-fns';
+import { differenceInYears, format, isSameDay, parse } from 'date-fns';
 
 @Component({
   selector: 'app-add-product',
@@ -36,8 +36,8 @@ export class AddProductComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       logo: [null, [Validators.required, AppValidation.urlImage]],
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
-      date_release: [new Date(), [Validators.required]],
-      date_revision: [new Date(), [Validators.required]]
+      date_release: [null, [Validators.required]],
+      date_revision: [null, [Validators.required]]
     });
 
     if (this._product.productEdit()) {
@@ -75,8 +75,10 @@ export class AddProductComponent implements OnInit {
 
   isValidReviewDate() {
     const { date_release, date_revision } = this.form.value
-    const release = new Date(date_release);
-    const review = new Date(date_revision);
+    if (!date_release || !date_revision) return false;
+
+    const release = parse(date_release, 'yyyy-MM-dd', new Date())
+    const review = parse(date_revision, 'yyyy-MM-dd', new Date())
 
     if (isNaN(release.getTime()) || isNaN(review.getTime())) return false;
 
@@ -85,10 +87,8 @@ export class AddProductComponent implements OnInit {
       return false;
     }
 
-    if(!this.productId) {
-      //VERIFY date_release must be today or greater
+    if (!this.productId) {
       const today = new Date();
-
       if (!isSameDay(release, today)) {
         this.form.get('date_release')?.setErrors({ todayMinDate: true });
         return false;
