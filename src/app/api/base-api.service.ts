@@ -20,14 +20,16 @@ export class BaseApiService {
 
 
   async request<T>(params: PerformApi<T>): Promise<ResultApi<T>> {
-    const { loadMsg, successMsg, showLoad, catchError, dataField } = params;
+    const { successMsg, showLoad, catchError, dataField } = params;
     try {
       const action$ = this.action(params);
+
+      if (showLoad) this._global.showLoader();
 
       if (!action$) return ResultApi.failure<T>('NEED HTTP REQUEST');
 
       const response = await lastValueFrom(action$);
-      console.log("base-api",response);
+      console.log("base-api", response);
 
       if (this._global.isInvalidResponse(response)) {
         return ResultApi.failure<T>(`Invalid API Response, dont exist field: ${dataField}`);
@@ -47,7 +49,7 @@ export class BaseApiService {
 
       return ResultApi.failure<T>(msgError);
     } finally {
-      // if (loader) loader.close();
+      this._global.hideLoader();
     }
   }
 

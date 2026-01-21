@@ -37,6 +37,7 @@ export class ProductService {
   async create(product: ProductData) {
     const response = await this._baseApi.request<ResponseAPI<ProductCreatedResponse>>({
       catchError: true,
+      showLoad: true,
       successMsg: 'messages.product_created',
       request: {
         action: 'post',
@@ -52,6 +53,7 @@ export class ProductService {
 
   async existId(id: string) {
     const response = await this._baseApi.request<boolean>({
+      showLoad: true,
       request: {
         action: 'get',
         url: ApiRoute.product.verifyId(id),

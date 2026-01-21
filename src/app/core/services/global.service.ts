@@ -1,6 +1,6 @@
 import { ToastService } from '@/shared/app-toast/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { LangService } from './lang.service';
 
 @Injectable({
@@ -8,8 +8,23 @@ import { LangService } from './lang.service';
 })
 export class GlobalService {
 
+
+  private _loader = signal(false)
+
   private _toast = inject(ToastService)
   private lang = inject(LangService)
+
+  get isLoading() {
+    return this._loader()
+  }
+
+  showLoader() {
+    this._loader.set(true)
+  }
+
+  hideLoader() {
+    this._loader.set(false)
+  }
 
   /**
    * Checks if the API response is invalid.

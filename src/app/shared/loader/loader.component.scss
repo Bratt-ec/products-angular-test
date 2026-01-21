@@ -1,0 +1,69 @@
+// Loader Overlay - Full screen overlay with backdrop blur
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.73);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.loader {
+    width: fit-content;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 30px;
+    clip-path: inset(0 3ch 0 0);
+    animation: l4 1s steps(4) infinite;
+    color: var(--ghost-white);
+}
+
+
+@keyframes l4 {
+    to {
+        clip-path: inset(0 -1ch 0 0)
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .loader-overlay {
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+    }
+
+    .loader-message {
+        font-size: 0.875rem;
+        padding: 0 1rem;
+    }
+
+    .loader {
+        &.loader-medium {
+            .spinner {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        &.loader-large {
+            .spinner {
+                width: 90px;
+                height: 90px;
+            }
+        }
+    }
+}
