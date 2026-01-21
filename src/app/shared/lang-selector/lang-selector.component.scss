@@ -1,0 +1,152 @@
+// Language Selector - Fixed floating position
+.lang-selector {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9998;
+}
+
+// Main Button
+.lang-selector-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 50px;
+  font-size: 0.9375rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lang-flag {
+  font-size: 1.25rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.lang-name {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.lang-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+// Dropdown Menu
+.lang-dropdown {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 180px;
+  background: var(--ghost-white);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    background: var(--ghost-white);
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: -1;
+  }
+}
+
+// Language Options
+.lang-option {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  position: relative;
+}
+
+.active {
+  background: var(--blue-light);
+}
+
+.lang-option-flag {
+  font-size: 1.5rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.lang-option-name {
+  flex: 1;
+  text-align: left;
+  font-weight: 500;
+}
+
+.lang-check {
+  width: 18px;
+  height: 18px;
+  color: var(--blue);
+  animation: checkIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+// Animations
+@keyframes checkIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .lang-selector {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .lang-selector-button {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .lang-flag {
+    font-size: 1.125rem;
+  }
+
+  .lang-dropdown {
+    min-width: 160px;
+  }
+
+  .lang-option {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .lang-option-flag {
+    font-size: 1.25rem;
+  }
+}

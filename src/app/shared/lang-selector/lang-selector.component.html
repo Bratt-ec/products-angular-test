@@ -1,0 +1,35 @@
+<div class="lang-selector" (clickOutside)="closeDropdown()">
+  <button
+    class="lang-selector-button"
+    (click)="toggleDropdown()"
+    type="button"
+    [attr.aria-expanded]="isOpen"
+    aria-label="Language selector">
+    <span class="lang-flag">{{ currentLang.flag }}</span>
+    <span class="lang-name">{{ currentLang.name }}</span>
+    <svg class="lang-arrow" [class.open]="isOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <div class="lang-dropdown" [class.open]="isOpen">
+    <button
+      *ngFor="let language of languages"
+      class="lang-option"
+      [class.active]="language.code === currentLang.code"
+      (click)="selectLanguage(language.code)"
+      type="button">
+      <span class="lang-option-flag">{{ language.flag }}</span>
+      <span class="lang-option-name">{{ language.name }}</span>
+      <svg
+        *ngIf="language.code === currentLang.code"
+        class="lang-check"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </button>
+  </div>
+</div>

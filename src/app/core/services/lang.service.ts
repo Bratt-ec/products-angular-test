@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 
+const PREFERENCE_KEY = 'app-language';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,11 +13,17 @@ export class LangService {
 
   private _locale: string = 'en';
 
+  public languages = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' }
+  ];
+
   public get locale(): string {
     return this._locale;
   }
   public set locale(value: string) {
     this._locale = value;
+    this.savePreference(value);
   }
 
   public get lang(): any {
@@ -27,18 +35,37 @@ export class LangService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this.loadPreference();
+  }
 
   async load() {
     const response = await lastValueFrom(this.http.get("assets/lang/lang.json", { responseType: 'json' }));
-    console.log(response);
     this._language = response;
+  }
+
+  async switch(locale: string) {
+    this.locale = locale;
+  }
+
+  get current() {
+    return this.languages.find(lang => lang.code === this._locale) || this.languages[0];
+  }
+
+  private savePreference(locale: string) {
+    localStorage.setItem(PREFERENCE_KEY, locale);
+  }
+
+  private loadPreference() {
+    const savedLanguage = localStorage.getItem(PREFERENCE_KEY);
+    if (savedLanguage && this.languages.some(lang => lang.code === savedLanguage)) {
+      this._locale = savedLanguage;
+    }
   }
 
   _(key: string, replace?: any) {
 
     if (!key.match(/^[\w-]+(?:\.[\w-]+)+$/)) {
-      // "Invalid key";
       return key;
     }
     let segments = key.split('.');

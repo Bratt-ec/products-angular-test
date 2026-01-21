@@ -72,5 +72,77 @@
             "msg_save_changes": "Do you want to save the changes?"
         }
     },
-    "es": {}
+    "es": {
+        "labels": {
+            "next": "Siguiente",
+            "previous": "Anterior",
+            "first": "Primero",
+            "last": "Ultimo",
+            "page": "Pagina",
+            "of": "de",
+            "go_to": "Ir a",
+            "go_to_page": "Ir a pagina",
+            "search": "Buscar",
+            "no_data": "No hay datos disponibles",
+            "loading": "Cargando...",
+            "error": "Ocurrio un error",
+            "name": "Nombre",
+            "email": "Email",
+            "age": "Edad",
+            "country": "Pais",
+            "save": "Guardar",
+            "update": "Actualizar",
+            "cancel": "Cancelar",
+            "delete": "Eliminar",
+            "edit": "Editar",
+            "actions": "Acciones",
+            "id": "ID",
+            "description": "Descripcion",
+            "logo": "Logo",
+            "release_date": "Fecha de lanzamiento",
+            "review_date": "Fecha de revision",
+            "name_product": "Nombre del producto",
+            "results": "Resultados",
+            "total_results": "Total de resultados",
+            "reset": "Resetear"
+        },
+        "pages": {
+            "list_products": "Listado de Productos",
+            "product_details": "Detalle del Producto",
+            "add_product": "Agregar Producto",
+            "new_product": "Nuevo Producto",
+            "edit_product": "Editar Producto",
+            "search_product": "Buscar Producto...",
+            "delete_product": "Eliminar Producto",
+            "confirm_delete": "Confirmar Eliminacion",
+            "msg_confirm_delete": "¿Estas seguro de eliminar este item: :name?",
+            "msg_confirm_update": "¿Estas seguro de actualizar este item: :name?"
+        },
+        "messages": {
+            "error_global": "Error al procesar tu solicitud, por favor intenta de nuevo",
+            "product_created": "Producto creado exitosamente",
+            "product_updated": "Producto actualizado exitosamente",
+            "product_deleted": "Producto eliminado exitosamente"
+        },
+        "validations": {
+            "id_repeated": "El ID ya se encuentra agregado",
+            "invalid_review_date": "La fecha debe ser un año despues de la fecha de lanzamiento",
+            "required": "Campo requerido",
+            "min_value": "El valor minimo es :min",
+            "max_value": "El valor maximo es :max",
+            "min_length": "El campo debe tener al menos :min caracteres.",
+            "max_length": "El campo debe tener un maximo de :max caracteres",
+            "email": "Ingrese un correo electronico valido",
+            "url_image": "Ingrese una URL de imagen valida",
+            "today_min_date": "La fecha debe ser hoy o en el futuro"
+        },
+        "dialogs": {
+            "confirm_action": "Confirmar Accion",
+            "are_you_sure": "¿Estas seguro de proceder?",
+            "confirm": "Confirmar",
+            "cancel": "Cancelar",
+            "save_changes": "Guardar Cambios",
+            "msg_save_changes": "¿Deseas guardar los cambios?"
+        }
+    }
 }

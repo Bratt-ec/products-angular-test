@@ -5,10 +5,11 @@ import { AppToastComponent } from "./shared/app-toast/app-toast.component";
 import { LoaderComponent } from "./shared/loader/loader.component";
 import { ConfirmDialogComponent } from "./shared/confirm-dialog/confirm-dialog.component";
 import { ConfirmDialogService } from './shared/confirm-dialog/confirm-dialog.service';
+import { LangSelectorComponent } from "./shared/lang-selector/lang-selector.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, AppToastComponent, LoaderComponent, ConfirmDialogComponent],
+  imports: [RouterModule, AppToastComponent, LoaderComponent, ConfirmDialogComponent, LangSelectorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
