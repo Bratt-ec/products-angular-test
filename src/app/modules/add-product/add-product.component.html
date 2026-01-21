@@ -4,7 +4,7 @@
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onValidate()">
-        <div *ngFor="let field of fieldsForm" class="form-input">
+        <div *ngFor="let field of fieldsForm" class="form-input" [class.fill-grid]="field === 'description' || field === 'logo'">
 
             <label [for]="field">{{ toLabel(field) | translate }}</label>
 
@@ -12,7 +12,7 @@
                 <textarea
                     [id]="field"
                     [formControlName]="field"
-                    [rows]="3"
+                    [rows]="4"
                     maxlength="200"
                     [class.error-border]="isInvalid(field)"
                 ></textarea>
@@ -30,10 +30,12 @@
             <msg-validation [formCtrl]="form" [formField]="field" />
         </div>
 
-        <button type="submit" class="btn-primary">{{ (productId ? 'labels.update' : 'labels.save') | translate }}</button>
-        <div class="row">
-            <button type="button" class="btn-clean txt-danger flex-1" (click)="back()">{{ 'labels.cancel' | translate }}</button>
-            <button type="button" class="btn-clean txt-info flex-1" (click)="reset()">{{ 'labels.reset' | translate }}</button>
+        <div class="fill-grid">
+            <button type="submit" class="btn-primary w-full">{{ (productId ? 'labels.update' : 'labels.save') | translate }}</button>
+            <div class="row mt-sm ">
+                <button type="button" class="btn-clean txt-danger flex-1" (click)="back()">{{ 'labels.cancel' | translate }}</button>
+                <button type="button" class="btn-clean txt-info flex-1" (click)="reset()">{{ 'labels.reset' | translate }}</button>
+            </div>
         </div>
     </form>
 
