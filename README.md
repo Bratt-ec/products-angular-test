@@ -1,59 +1,70 @@
-# TestDevSofka
+# Test Dev Sofka - Angular Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.14.
+This project is a technical test developed in Angular, focusing on product management with features like listing, adding, editing, and deleting products. It adheres to Clean Architecture principles and includes comprehensive unit tests.
 
-## Development server
+## 🚀 Features
 
-To start a local development server, run:
+- **Product Management**: CRUD operations for products.
+- **Form Validation**: robust validation logic for product inputs.
+- **Internationalization (i18n)**: Language switching support (en/es).
+- **Clean Architecture**: Separation of concerns into `api`, `core`, `infrastructure`, `modules`, and `shared` layers.
+- **Unit Testing**: ~70% code coverage using Jasmine & Karma.
 
-```bash
-ng serve
+## 📂 Project Structure
+
+The project is organized into the following structure:
+
+```
+src/app/
+├── api/             # Base API services and models (Generic HTTP handling)
+├── core/            # Core services (Global, Lang, Form) and utilities
+├── infrastructure/  # Specific data services (ProductService) and DTOs
+├── modules/         # Feature modules (AddProduct, ListProducts)
+├── shared/          # Shared components (Toast, Datatable, ConfirmDialog, etc.) & pipes
+└── app.component.*  # Root component
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🛠️ Installation
 
-## Code scaffolding
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/Bratt-ec/products-angular-test.git
+    cd products-angular-test
+    ```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-```bash
-ng generate component component-name
-```
+## 💻 Usage
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+**Development Server**:
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-```bash
-ng generate --help
-```
+## 🧪 Running Tests
 
-## Building
+This project includes a comprehensive suite of unit tests.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+**Run all tests**:
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+**Run tests in headless mode (CI)**:
 ```bash
-ng e2e
+ng test --watch=false --browsers=ChromeHeadless
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Test Coverage Highlights
 
-## Additional Resources
+- **Services**: `ProductService`, `BaseApiService`, `FormService`, `GlobalService`, `LangService`.
+- **Components**: `ListProductsComponent`, `AddProductComponent`, `DatatableComponent`, `ConfirmDialogComponent`.
+- **Shared**: `TranslatePipe`.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📦 Dependencies
+
+- **Angular**: v19
+- **RxJS**: Reactive extensions
+- **Date-fns**: Date manipulation
+- **Jasmine/Karma**: Testing framework
