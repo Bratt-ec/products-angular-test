@@ -36,3 +36,21 @@ export type ErrorApi = {
     message: string;
     stack: string;
 }
+
+
+export interface BackendConstraint {
+  [key: string]: string; // e.g., { isNotEmpty: "logo should not be empty" }
+}
+
+export interface BackendErrorDetail {
+  property: string; // e.g., "logo"
+  value: any;
+  constraints: BackendConstraint;
+  children?: any[]; // For nested errors if needed
+}
+
+export interface BackendErrorResponse {
+  name: string;
+  message: string;
+  errors: BackendErrorDetail[];
+}

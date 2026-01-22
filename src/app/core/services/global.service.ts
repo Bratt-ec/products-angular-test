@@ -2,6 +2,7 @@ import { ToastService } from '@/shared/app-toast/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { LangService } from './lang.service';
+import { setBackendErrors } from '../utils/app-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -47,11 +48,14 @@ export class GlobalService {
     if (catchErr instanceof HttpErrorResponse) {
       if (catchErr.error) {
         // ui catch error
-        this._toast.show({
-          message: catchErr.error.message,
-          type: 'error'
-        });
-        return
+        const msgErr = setBackendErrors(catchErr.error)
+        if (msgErr.length) {
+          this._toast.show({
+            message: msgErr[0],
+            type: 'error'
+          });
+          return
+        }
       }
     }
 
